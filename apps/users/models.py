@@ -9,7 +9,6 @@ from utils.user_phone_number_regex import phone_regex
 class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(verbose_name='Имя', max_length=128)
     last_name = models.CharField(verbose_name='Фамилия', max_length=128)
-    email = models.EmailField(verbose_name='Почта', unique=True)
     phone_number = models.CharField(verbose_name='Номер телефона',
                                     validators=[phone_regex],
                                     max_length=20, unique=True)
@@ -27,4 +26,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'Пользователи'
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.phone_number}'
