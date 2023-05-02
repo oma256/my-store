@@ -5,3 +5,10 @@
 .register-icon {
     margin-right: 10px;
 }
+
+.input-err-msg {
+    color: red;
+    margin-left: 10px;
+    font-size: 15px;
+    display: none;
+}

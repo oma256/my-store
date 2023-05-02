@@ -5,6 +5,12 @@ const lastNameInput = document.getElementById('last_name_id');
 const passwordInput = document.getElementById('pass_id');
 const repeatPasswordInput = document.getElementById('repeat_pass_id');
 
+const phoneNumberErrMsg = document.getElementById('phone-number-err-id');
+const firstNameErrMsg = document.getElementById('first-name-err-id');
+const lastNameErrMsg = document.getElementById('last-name-err-id');
+const passwordErrMsg = document.getElementById('password-err-id');
+const repeatPasswordErrMsg = document.getElementById('repeat-password-err-id');
+
 registerBtn.onclick = () => {
     const requestData = {
         phoneNumber: phoneNumberInput.value,
@@ -25,8 +31,18 @@ registerBtn.onclick = () => {
         })
         .then(handleErrors)
         .then(responseJSON => {
-            console.log(responseJSON);
-            location.href = '/'
+            console.log(responseJSON['detail'])
+            if (responseJSON['detail']['phoneNumber']) {
+                phoneNumberErrMsg.style.display = 'block';
+            } else if (responseJSON['detail']['firstName']) {
+                firstNameErrMsg.style.display = 'block';
+            } else if (responseJSON['detail']['lastName']) {
+                lastNameErrMsg.style.display = 'block';
+            } else if (responseJSON['detail']['password']) {
+                passwordErrMsg.style.display = 'block';
+            } else if (responseJSON['detail']['repeatPassword']) {
+                repeatPasswordErrMsg.style.display = 'block';
+            }
         })
         .catch(error => console.log(error));
 }

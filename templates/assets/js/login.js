@@ -1,6 +1,8 @@
 const loginBtn = document.getElementById('login-btn');
 const phoneNumberValue = document.getElementById('form3Example1c');
 const passwordValue = document.getElementById('form3Example4c');
+const passErrMsg = document.getElementById('pass-err-msg-id');
+const userNotFoundErrMsg = document.getElementById('user-not-found-msg-id');
 
 
 loginBtn.onclick = () => {
@@ -20,8 +22,15 @@ loginBtn.onclick = () => {
         })
         .then(handleErrors)
         .then(responseJSON => {
-            console.log(responseJSON);
-            location.href = '/'
+            if (responseJSON['detail']['password']) {
+                passErrMsg.style.display = 'block';
+                userNotFoundErrMsg.style.display = 'none';
+            } else if (responseJSON['detail']['user']) {
+                userNotFoundErrMsg.style.display = 'block';
+                passErrMsg.style.display = 'none';
+            } else {
+                location.href = '/';
+            }
         })
         .catch(error => console.log(error));
 };
